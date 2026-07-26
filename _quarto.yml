@@ -13,6 +13,7 @@ book:
     - analysis.qmd
     - design-and-implementation.qmd
     - references.qmd
+  downloads: pdf
 
 bibliography: references.bib
 
