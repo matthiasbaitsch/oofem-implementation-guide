@@ -1,0 +1,33 @@
+project:
+  type: book
+  output-dir: __output
+
+book:
+  title: "Programming the Finite Element Method"
+  subtitle: "Implementation Guideline"
+  author: "Matthias Baitsch"
+  date: today
+  chapters:
+    - index.qmd
+    - introduction.qmd
+    - analysis.qmd
+    - design-and-implementation.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: custom.css
+    number-depth: 2
+    number-sections: true
+  pdf:
+    documentclass: scrreprt
+    number-sections: true
+    number-depth: 2
+
+
+

@@ -1,0 +1,12 @@
+/* Styling for raw program output blocks, e.g. ```{.raw-output} */
+pre.raw-output,
+div.raw-output pre {
+  font-size: 0.85em;
+  background-color: #f0f0f0;
+  padding-left: 1em;
+}
+
+pre.raw-output code,
+div.raw-output pre code {
+  background-color: transparent;
+}

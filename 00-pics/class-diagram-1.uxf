@@ -1,0 +1,35 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>180</x><y>60</y><w>370</w><h>110</h></coordinates><panel_attributes>Structure
+--
++ Nodes: List&lt;Node&gt;
++ Elements: List&lt;Node&gt;
+--
++ AddNode(x1: double, x2: double): Node
++ AddElement(e: double, a: double, n1: int, n2: int): Element
++ Print(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>410</x><y>280</y><w>300</w><h>140</h></coordinates><panel_attributes>Node
+--
++ Position: Vector
++ Constraint: Constraint
++ Force: Force
+--
++ Node(x1: double, x2: double)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>280</y><w>310</w><h>140</h></coordinates><panel_attributes>Element
+--
++ E: double
++ A: double
++ Node: Node1
++ Node: Node2
+--
++ Element(e: double, a: double, n1: Node, n2: Node)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>280</y><w>160</w><h>50</h></coordinates><panel_attributes>Constraint
+--
++ Fixed: bool[]
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>370</y><w>160</w><h>50</h></coordinates><panel_attributes>Force
+--
++ Components: Vector
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>160</x><y>160</y><w>230</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes><additional_attributes>210;10;210;80;10;80;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>160</y><w>220</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes><additional_attributes>10;10;10;80;200;80;200;120</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>280</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>370</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>320</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>60</y><w>240</w><h>110</h></coordinates><panel_attributes>Visualizer
+--
++ Structure: Structure
++ ForceScale: double
++ ConstraintSize: double
+--
++ Visualizer(structure: Structure)
++ DrawStructure(app: Viewer): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>90</y><w>190</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;170;10</additional_attributes></element></diagram>

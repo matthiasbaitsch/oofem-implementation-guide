@@ -1,0 +1,3 @@
+# Preface {.unnumbered}
+
+This document is a guideline to the software implementation of the finite element method in the 'Programming the Finite Element Method' (RUB) and 'Objekt-oriented Modeling and Implementation of Structural Analysis Software' (HS-Bochum) courses. 

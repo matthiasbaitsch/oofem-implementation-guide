@@ -1,0 +1,246 @@
+# Design and implementation
+
+In this section, for each of the three analysis phases, a software design is presented and you are guided step by step through the implementation. Of course, there are many other paths to get to the same endgoal. Feel free to go your own way if you are familiar with programming and finite element analysis.
+
+One important to choice to make is that of the spatial dimension of the structure: Should the software analyze plane truss structures or spatial truss structures. For trusses, there is not much of difference in theory and implementation. Mostly everything is the same except that position and displacement vectors (and some others) have either two or three entries. However, for the visualization of a spatial structure you need a suitable 3D graphics library. While in Python you can use PyVista for 3D visualization, there is not easy to use 3D library for C#. 
+
+::: {.callout-tip}
+Plane or spatial analysis.
+
+- Python: Consider to perform a 3D analysis and use PyVista for visualization
+- C#: Build a software for 2D analysis and use the BoDraw graphics library
+- For other programming languages, check the availability of a graphics library
+
+In this chapter, we describe the design and implementation of a 2D analysis tool. However, extension to the spatial case is straightforward, simply add a third component to all arrays.
+:::
+
+## Getting started
+
+The first step is to set up your software project and to install the required libraries.
+
+::: {.panel-tabset}
+## Implementation in C\#
+
+Also consider the [guidelines](https://matthiasbaitsch.github.io/informatik-master/lernpfad/folien/c/11-arbeiten-mit-projekten.html#/title-slide){target="_blank"} of the Informatics course at Hochschule Bochum.
+
+Steps:
+
+1. Download, unpack and rename the [project template](https://matthiasbaitsch.github.io/informatik-master/lernpfad/folien/c/projekt-hausarbeit-vorlage.zip). Also rename the solution file to `oofem.slnx`.
+1. Create the projects `oofem` and `oofem-visualizer` and add them to the solution.
+    ```bash
+    dotnet new console -o oofem
+    dotnet new console -o oofem-visualizer
+    dotnet sln add */*.csproj
+    ```
+1. In order to work with matrices and vectors, you can use the [Math.NET Numerics](https://numerics.mathdotnet.com){target="_blank"} package. Add the lines
+
+    ```xml
+    <ItemGroup>
+      <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+      <Using Include="MathNet.Numerics.LinearAlgebra.Matrix&lt;double&gt;" Alias="Matrix" />
+      <Using Include="MathNet.Numerics.LinearAlgebra.Vector&lt;double&gt;" Alias="Vector" />
+    </ItemGroup>
+    ```
+
+  to the `oofem.csproj` file. The package reference include the package, the following two lines simplify usage.
+
+1. The `oofem-visualizer` project needs BoDraw
+
+    ```
+    dotnet add oofem-visualizer/oofem-visualizer.csproj package BoDraw.App
+    ```
+
+## Implementation in Python
+TODO
+:::
+
+## Preprocessing
+
+For preprocessing, we need the classes identified in @sec-analysis-preprocessing along with required methods and attributes. @fig-class-diagram-1 shows a possible software design in a UML class diagram.
+
+![UML class diagram - preprocessing](00-pics/class-diagram-1.png){#fig-class-diagram-1}
+
+Notes on the class diagram in @fig-class-diagram-1:
+
+- For simplicity, all attributes are public. We use the capital first letters for attributes and methods, please adapt to the programming style of you language of choice.
+- The software design is intentionally simple. It can later be extended as needed e.g. by introducing an abstract element class with concrete subclasses for trusses and beams.
+- The `Constraint` and `Force` classes just holders of an array. An alternative would have been to directly introduce a boolean and a double array to the node class for constraints and forces.
+
+Regarding the data types in the class diagram:
+
+- `List`: An ordered collection which can grow (array in Python, `List` in C#)
+- `Vector`: A type representing mathematical vectors (NumPy in Python, Math.NET Numerics in C#)
+- `type[]`: Standard array type
+
+### Implement structural classes
+
+Implement the classes for the structure as shown in @fig-class-diagram-1. The following code fragment establishes the model in @fig-system-example and can be used for testing purposes. If your code is for 3D models, include the third coordinate 0 and fix all nodes in $\mathbf{e}_3$ direction.
+
+```{.csharp}
+ {{< include oofem-csharp/oofem-01/Program.cs >}}
+```
+
+A nicely formatted output of the `Print` method is given here.
+
+```{.raw-output}
+──────────────────────────────────────────────────────────────────
+                          N O D E S
+──────────────────────────────────────────────────────────────────
+         Position               Constraint       Force
+         X           Y          Cx     Cy        Fx          Fy
+──────────────────────────────────────────────────────────────────
+  0      0.0000      0.0000      X      X                        
+  1      4.0000      0.0000             X                        
+  2      0.0000      3.0000                 120000.00            
+──────────────────────────────────────────────────────────────────
+
+──────────────────────────────────────────────────────────────────
+                         E L E M E N T S
+──────────────────────────────────────────────────────────────────
+                 E              A
+──────────────────────────────────────────────────────────────────
+  0    10000000000         0.0001
+  1    10000000000         0.0001
+  2    10000000000         0.0001
+──────────────────────────────────────────────────────────────────
+```
+
+::: {.callout-tip}
+Use a very simple output without any formatting first and make the program run. Improve the output at the very end of this step.
+:::
+
+### Implement visualization
+
+Program the `Visualizer` class in the UML class diagram in @fig-class-diagram-1. 
+
+::: {.columns}
+::: {.column width=45%}
+```{.csharp}
+ {{< include oofem-csharp/oofem-visualizer-01/Program.cs >}}
+```
+:::
+::: {.column width=5%}
+:::
+::: {.column width=50%}
+[]{}
+
+The code to the left shows how the `Visualizer` class is used with the `BoDraw` drawing package (adapt to your needs) and below an idea, how the result might look like.
+
+![](00-pics/draw-system.jpg){width="80%"}
+
+Using triangles (or cones in 3D) is a simple yet effective way to visualize constraints. For the moment, the constraint symbol size and the force scale are set manually in the code (left). In a later stage, this should be done automatically.
+:::
+:::
+
+## Processing
+
+The additional methods needed for the processing step are shown inf @fig-class-diagram-2. We now implement them step by step.
+
+![UML class diagram - processing](00-pics/class-diagram-2.png){#fig-class-diagram-2}
+
+### Element stiffness matrix implementation
+
+Let $\mathbf{X}^{e1}$ and $\mathbf{X}^{e2}$ denote the element node positions. Then, with the element length 
+
+$$
+l^e = \|\mathbf{X}^{e2} - \mathbf{X}^{e1}\|,
+$$
+
+the direction vector 
+
+$$
+\mathbf{d}^e = \frac{1}{l} (\mathbf{X}^2 - \mathbf{X}^1)
+$$ 
+
+and the transformation vector 
+
+$$
+\mathbf{t}^e 
+= 
+\left[\begin{array}{c}-\mathbf{d}^e \\ \phantom{-}\mathbf{d}^e\end{array}\right]
+$$
+
+the element stiffness matrix is
+
+$$
+\mathbf{K}^e = \frac{EA}{l} \mathbf{t}^e (\mathbf{t}^e)^T.
+$$
+
+Note that the transformation vector has four entries in 2D and six entries in 3D. The product $\mathbf{t}^e (\mathbf{t}^e)^T$ is actually a matrix since we multiply a column vector with a row vector. Such a product is called a dyadic or outer product of a vector.
+
+In order to test the methods, add the length to the element output and compute the stiffness matrix for element 3. Below the testing code
+
+```{.csharp}
+ {{< include oofem-csharp/oofem-02/Program.cs >}}
+```
+
+and the desired output
+
+```raw-output
+──────────────────────────────────────────────────────────────────
+                          N O D E S
+──────────────────────────────────────────────────────────────────
+         Position               Constraint       Force
+         X           Y          Cx     Cy        Fx          Fy
+──────────────────────────────────────────────────────────────────
+  0      0.0000      0.0000      X      X                        
+  1      4.0000      0.0000             X                        
+  2      0.0000      3.0000                 120000.00            
+──────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────────────────────────────────
+                         E L E M E N T S
+──────────────────────────────────────────────────────────────────
+                 E         A              L
+──────────────────────────────────────────────────────────────────
+  0    10000000000         0.0001         4.0000
+  1    10000000000         0.0001         3.0000
+  2    10000000000         0.0001         5.0000
+──────────────────────────────────────────────────────────────────
+
+K3
+DenseMatrix 4x4-Double
+ 128000  -96000  -128000   96000
+ -96000   72000    96000  -72000
+-128000   96000   128000  -96000
+  96000  -72000   -96000   72000
+```
+
+### Implementation of DOF enumeration
+
+In finite element analysis, there exist many approaches to handle degrees of freedom. We take an approach, where the linear system only includes actual degrees of freedom (not fixed by a constraint). Correspondingly, an entry of the `DOFs` vector of a node contains a value of $-1$ if the node is fixed in that direction. The purpose of the `EnumerateDOFs` method in the `Node` class is to collect the degree of freedom indices of a node given a starting number. The corresponding method in the `Structure` class invokes the method for each node and returns the total number of degrees of freedom.
+
+Implement the `EnumerateDOFs` methods in `Node` and `Element`. You can use this code for testing:
+
+
+::: {.panel-tabset}
+
+## Implementation in C\#
+
+```csharp
+int N = s.EnumerateDOFs();
+Console.WriteLine($"Number of DOFs: {N}");
+for (int i = 0; i < s.Nodes.Count; i++)
+{
+    Console.WriteLine($"Node {i} has DOFs [{string.Join(", ", s.Nodes[i].DOFs)}]");
+}
+```
+
+## Implementation in Python
+
+TODO
+:::
+
+and the correct output for our example
+
+```raw-output
+Number of DOFs: 3
+Node 0 has DOFs [-1, -1]
+Node 1 has DOFs [0, -1]
+Node 2 has DOFs [1, 2]
+```
+
+## Postprocessing
+
+

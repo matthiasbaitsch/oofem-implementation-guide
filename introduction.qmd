@@ -1,0 +1,34 @@
+# Introduction
+
+## Approaches to the object-oriented implementation of the finite element method
+
+When programming the finite element method using an object-oriented programming language, the fundamental decision is to choose the fundamental concepts from the problem domain which are then represented by class hierarchies in the software system. Two basic approaches emerged:
+
+Mathematical Approach
+
+: Solve a boundary value problem by defining a weak form and constructing a finite element space on a subdivision of the problem domain. Here, a finite element refers to the classic definition by Ciarlet [@ciarlet1978finite] as a triple of a domain, a function space and a set of linear functionals. The deal.II package is a mature example from this camp.
+
+Engineering Approach
+
+: Define a model consisting of nodes, elements, loads, forces and constraints. In this world, a finite element (such as the CST or MITC4+ [@ko2016mitc4plus] elements) usually comprises the physical problem to be solved, a geometry and a choice of shape functions. For instance, OOFEM and Kratos fall into this category.
+
+Of course, the two styles presented here mark two ends of a continouus spectrum and existing software systems sit somewhere in between.
+
+While basically the same computations are carried out, the two styles differ substantially in terminology and abstractions. While the mathematical approach is elegant, abstract and very close to the underlying theory, the engineering approach has the advantage of leading to a straightforward and easy to understand implementation. This is the path we follow in this implementation guideline.
+
+We follow a straightforward approach to an object-oriented implementation of the method which prioritizes simplicity over generality and pays little attention to efficiency. If you are interested in more sophisticated approaches, have a look at existing object oriented finite element projects such as deal.II [@arndt2021dealii], FEniCS [@alnaes2015fenics], OOFEM [@patzak2012oofem] or Kratos Multiphysics [@dadvand2010kratos] (all C++), PyFEM [@deborst2012nonlinear] (Python) or Ferrite.jl [@carlsson2024ferrite] (Julia) just to name a few.
+
+## Overview
+
+This guideline TODO
+
+## A note on large language models
+
+You can have a working code for truss structures within very little time (half an hour at most) using a sensible prompt for a capable LLM. However, when choosing this path, you deprive yourself of a great opportunity to improve your understanding of the finite element method and to develop your programming skills. 
+
+::: {.callout-caution}
+Don't use large language models to implement your project!
+:::
+
+On the other side, feel free to use AI to understand error messsages or in order to review your code, it is a great tool for such things!
+
