@@ -16,7 +16,7 @@ s.AddElement(10e9, 1e-4, 2, 1);
 
 BoDrawApp app = new BoDrawApp();
 Visualizer v = new Visualizer(s);
-v.ForceScale = 0.00001;
+v.ForceScale = 0.001;
 v.ConstraintSize = 0.1;
 v.DrawSystem(app);
 app.Show();

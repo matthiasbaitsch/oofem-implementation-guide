@@ -1,8 +1,8 @@
 # Design and implementation {#sec-design-and-implementation}
 
-In this section, for each of the three analysis phases, a software design is presented and you are guided step by step through the implementation. Of course, there are many other paths to get to the same endgoal. Feel free to go your own way if you are familiar with programming and finite element analysis.
+In this section, for each of the three analysis phases, a software design is presented and you are guided step by step through the implementation. Of course, there are many other paths to get to the same end goal. Feel free to go your own way if you are familiar with programming and finite element analysis.
 
-One important to choice to make is that of the spatial dimension of the structure: Should the software analyze plane truss structures or spatial truss structures. For trusses, there is not much of difference in theory and implementation. Mostly everything is the same except that position and displacement vectors (and some others) have either two or three entries. However, for the visualization of a spatial structure you need a suitable 3D graphics library. While in Python you can use PyVista for 3D visualization, there is not easy to use 3D library for C#. 
+One important choice to make is that of the spatial dimension of the structure: should the software analyze plane truss structures or spatial truss structures? For trusses, there is not much difference in theory and implementation. Mostly everything is the same except that position and displacement vectors (and some others) have either two or three entries. However, for the visualization of a spatial structure you need a suitable 3D graphics library. While in Python you can use PyVista for 3D visualization, there is no easy-to-use 3D library for C#.
 
 ::: {.callout-tip}
 Plane or spatial analysis.
@@ -42,7 +42,7 @@ Steps:
     </ItemGroup>
     ```
 
-  to the `oofem.csproj` file. The package reference include the package, the following two lines simplify usage.
+    to the `oofem.csproj` file. The `PackageReference` line adds the package; the two `Using` lines below simplify its usage.
 
 1. The `oofem-visualizer` project needs BoDraw
 
@@ -62,9 +62,9 @@ For preprocessing, we need the classes identified in @sec-analysis-preprocessing
 
 Notes on the class diagram in @fig-class-diagram-1:
 
-- For simplicity, all attributes are public. We use the capital first letters for attributes and methods, please adapt to the programming style of you language of choice.
-- The software design is intentionally simple. It can later be extended as needed e.g. by introducing an abstract element class with concrete subclasses for trusses and beams.
-- The `Constraint` and `Force` classes just holders of an array. An alternative would have been to directly introduce a boolean and a double array to the node class for constraints and forces.
+- For simplicity, all attributes are public. We use capital first letters for attributes and methods; adapt this to the programming style of your language of choice.
+- The software design is intentionally simple. It can later be extended as needed, e.g., by introducing an abstract element class with concrete subclasses for trusses and beams.
+- The `Constraint` and `Force` classes are just holders of an array. An alternative would have been to directly introduce a boolean and a double array to the node class for constraints and forces.
 
 Regarding the data types in the class diagram:
 
@@ -110,7 +110,7 @@ Use a very simple output without any formatting first and make the program run. 
 
 ### Implement visualization
 
-Program the `Visualizer` class in the UML class diagram in @fig-class-diagram-1. 
+Program the `Visualizer` class as shown in the UML class diagram in @fig-class-diagram-1.
 
 ::: {.columns}
 ::: {.column width=45%}
@@ -132,7 +132,7 @@ Using triangles (or cones in 3D) is a simple yet effective way to visualize cons
 
 ## Processing
 
-The additional methods needed for the processing step are shown inf @fig-class-diagram-2. We now implement them step by step.
+The additional methods needed for the processing step are shown in @fig-class-diagram-2. We now implement them step by step.
 
 ![UML class diagram - processing](00-pics/class-diagram-2.png){#fig-class-diagram-2}
 
@@ -147,7 +147,7 @@ $$
 the direction vector 
 
 $$
-\mathbf{d}^e = \frac{1}{l} (\mathbf{X}^{e2} - \mathbf{X}^{e1})
+\mathbf{d}^e = \frac{1}{l^e} (\mathbf{X}^{e2} - \mathbf{X}^{e1})
 $$ 
 
 and the transformation vector 
@@ -166,7 +166,7 @@ $$
 
 Note that the transformation vector has four entries in 2D and six entries in 3D. The product $\mathbf{t}^e (\mathbf{t}^e)^T$ is actually a matrix since we multiply a column vector with a row vector. Such a product is called a dyadic or outer product of a vector.
 
-In order to test the methods, add the length to the element output and compute the stiffness matrix for element 3. Below the testing code
+In order to test the methods, add the length to the element output and compute the stiffness matrix for element 3. Below is the testing code:
 
 ```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=17}
 ```
@@ -241,10 +241,10 @@ The `Solve` method of the structure class performs the following tasks:
 1. Enumerate DOFs using its own `EnumerateDOFs` method
 1. Initialize system stiffness matrix and load vector with zeros using the size `N` from the first step
 1. Loop over each element of the structure
-    - Compute element stiffness matrix $\mathbf{K}^e$ and store element DOFs in a variable `dofs`
+    - Compute the element stiffness matrix $\mathbf{K}^e$ and store its DOFs in a variable `dofs`
     - Use two nested loops for the element DOFs `i` and `j`
     - The corresponding system DOFs are `I = dofs[i]` and `J = dofs[j]`
-    - If `I` and `J` both are not -1, add the local stiffness matrix entry $K^e_{ij}$ to the system matrix $K_{IJ}$
+    - If neither `I` nor `J` equals -1, add the local stiffness matrix entry $K^e_{ij}$ to the system matrix $K_{IJ}$
 1. Use the same approach to assemble the system load vector $\mathbf{r}$
 1. Solve the linear system $\mathbf{K}\mathbf{u} = \mathbf{r}$ 
 1. Extract nodal displacements using the relation $u^n_i = u_I$ where again, $I$ is the system DOF corresponding to the nodal dof $i$
@@ -272,7 +272,7 @@ $$
 \right]
 $$
 
-as reference. The final result can be verified by the following code and output.
+as a reference. The final result can be verified by the following code and output.
 
 ::: {.panel-tabset}
 
@@ -294,7 +294,7 @@ Node 2 has displacement [0.0162, 0.0027]
 
 ## Postprocessing
 
-With the nodal displacements available, the last step is to derive the quantity of interest for a truss analysis - the normal force in each element - and to present the results, both as formatted text output and as pictures of the deformed structure and the element normal forces. @fig-class-diagram-3 shows the additional methods needed for this step, building on the classes already implemented.
+With the nodal displacements available, the last step is to compute the normal force in each element and to present the results, both as formatted text output and as pictures of the deformed structure and the element normal forces. @fig-class-diagram-3 shows the additional methods needed for this step, building on the classes already implemented.
 
 ![UML class diagram - postprocessing](00-pics/class-diagram-3.png){#fig-class-diagram-3}
 
@@ -306,10 +306,10 @@ $$
 \mathbf{u}^e = \left[\begin{array}{c}\mathbf{u}^{n1} \\ \mathbf{u}^{n2}\end{array}\right],
 $$
 
-with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the normal force is
+with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the elongation is $(\mathbf{t}^e)^T \mathbf{u}^e$ and the normal force is
 
 $$
-N^e = \frac{EA}{l^e} \mathbf{t}^e) \cdot \mathbf{u}^e.
+N^e = \frac{EA}{l^e} \; \mathbf{t}^e \cdot \mathbf{u}^e.
 $$
 
 Implement a `Displacement` method in `Element` that concatenates the displacement vectors of the two nodes (analogous to the `DOFs` method) and a `NormalForce` method evaluating the formula above. Test your implementation by computing the normal force of element 3 right after solving:
