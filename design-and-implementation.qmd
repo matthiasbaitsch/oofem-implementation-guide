@@ -310,7 +310,7 @@ $$
 \mathbf{u}^e = \left[\begin{array}{c}\mathbf{u}^{n1} \\ \mathbf{u}^{n2}\end{array}\right],
 $$
 
-with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the elongation is $(\mathbf{t}^e)^T \mathbf{u}^e$ and the normal force is
+with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the elongation is $\mathbf{t}^e \cdot \mathbf{u}^e$ and the normal force is
 
 $$
 N^e = \frac{EA}{l^e} \; \mathbf{t}^e \cdot \mathbf{u}^e.
