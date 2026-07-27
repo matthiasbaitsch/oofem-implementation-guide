@@ -19,8 +19,9 @@
 + Length(): double
 + D(): Vector
 + T(): Vector
-+ K(): Matrix
-+ DOFs(): int[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>280</y><w>160</w><h>50</h></coordinates><panel_attributes>Constraint
++ StiffnessMatrix(): Matrix
++ DOFs(): int[]
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>280</y><w>160</w><h>50</h></coordinates><panel_attributes>Constraint
 --
 + Fixed: bool[]
 --</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>370</y><w>160</w><h>50</h></coordinates><panel_attributes>Force

@@ -3,6 +3,7 @@ public class Node
     public Force Force = new Force();
     public Constraint Constraint = new Constraint();
     public Vector Position = Vector.Build.Dense(2);
+    public Vector Displacement = Vector.Build.Dense(2);
     public int[] DOFs = [-1, -1];
 
     public Node(double x1, double x2)

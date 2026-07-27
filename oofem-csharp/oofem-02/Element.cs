@@ -29,9 +29,24 @@ public class Element
         return Vector.Build.DenseOfEnumerable((-e1).Concat(e1));
     }
 
-    public Matrix K()
+    public Matrix StiffnessMatrix()
     {
         return this.E * this.A / this.Length() * Vector.OuterProduct(this.T(), this.T());
+    }
+
+    public int[] DOFs()
+    {
+        return this.Node1.DOFs.Concat(this.Node2.DOFs).ToArray();
+    }
+
+    public Vector Displacement()
+    {
+        return Vector.Build.DenseOfEnumerable(this.Node1.Displacement.Concat(this.Node2.Displacement));
+    }
+
+    public double NormalForce()
+    {
+        return this.E * this.A / this.Length() * this.T() * this.Displacement();
     }
 
     public override string ToString()

@@ -29,6 +29,75 @@ public class Structure
         return n;
     }
 
+    public void Solve()
+    {
+        int N = this.EnumerateDOFs();
+        Matrix K = Matrix.Build.Dense(N, N);
+        Vector r = Vector.Build.Dense(N);
+
+        // Elements
+        foreach (Element element in this.Elements)
+        {
+            int[] dofs = element.DOFs();
+            Matrix Ke = element.StiffnessMatrix();
+
+            for (int i = 0; i < dofs.Length; i++)
+            {
+                int I = dofs[i];
+
+                for (int j = 0; j < dofs.Length; j++)
+                {
+                    int J = dofs[j];
+
+                    if (I != -1 && J != -1)
+                    {
+                        K[I, J] += Ke[i, j];
+                    }
+                }
+            }
+        }
+
+        // Forces
+        foreach (Node node in this.Nodes)
+        {
+            int[] dofs = node.DOFs;
+
+            for (int i = 0; i < dofs.Length; i++)
+            {
+                int I = dofs[i];
+
+                if (I != -1)
+                {
+                    r[I] += node.Force.Components[i];
+                }
+            }
+        }
+
+        // Solve
+        Vector u = K.Solve(r);
+
+        // Nodal displacements
+        foreach (Node node in this.Nodes)
+        {
+            int[] dofs = node.DOFs;
+
+            for (int i = 0; i < dofs.Length; i++)
+            {
+                int I = dofs[i];
+
+                if (I != -1)
+                {
+                    node.Displacement[i] = u[I];
+                }
+            }
+        }
+
+        // Print
+        Console.WriteLine("K = " + K);
+        Console.WriteLine("r = " + r);
+        Console.WriteLine("u = " + u);
+    }
+
     public void Print()
     {
         Console.WriteLine("──────────────────────────────────────────────────────────────────");

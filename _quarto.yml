@@ -17,6 +17,9 @@ book:
 
 bibliography: references.bib
 
+filters:
+   - include-code-files
+   
 format:
   html:
     theme:
