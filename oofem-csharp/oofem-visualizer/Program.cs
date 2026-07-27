@@ -18,14 +18,14 @@ BoDrawApp app = new BoDrawApp();
 Visualizer v = new Visualizer(s);
 v.ForceScale = 0.001;
 v.ConstraintSize = 0.1;
-v.DrawSystem(app);
-app.Show();
+// v.DrawSystem(app);
+// app.Show();
 
 s.Solve();
 
-v.DisplacementScale = 75;
-v.DrawDeformation(app);
-app.Show();
+// v.DisplacementScale = 75;
+// v.DrawDeformation(app);
+// app.Show();
 
 v.ElementForceScale = 1e-3;
 v.DrawElementForces(app);

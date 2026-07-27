@@ -294,7 +294,11 @@ Node 2 has displacement [0.0162, 0.0027]
 
 ## Postprocessing
 
-With the nodal displacements available, the last step is to compute the normal force in each element and to present the results, both as formatted text output and as pictures of the deformed structure and the element normal forces. @fig-class-diagram-3 shows the additional methods needed for this step, building on the classes already implemented.
+With the nodal displacements available, the last step is to compute the normal force in each element and to present the results, both as formatted text output and as pictures of the deformed structure and the element normal forces as in @fig-postprocessing.
+
+![Visualization of deformation and element normal forces](00-pics/postprocessing.jpg){#fig-postprocessing width="70%"}
+
+ @fig-class-diagram-3 shows the additional methods needed for this step, building on the classes already implemented.
 
 ![UML class diagram - postprocessing](00-pics/class-diagram-3.png){#fig-class-diagram-3}
 
