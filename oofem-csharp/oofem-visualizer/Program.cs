@@ -1,4 +1,4 @@
-﻿using BoDraw;
+using BoDraw;
 
 Structure s = new Structure();
 
@@ -21,3 +21,12 @@ v.ConstraintSize = 0.1;
 v.DrawSystem(app);
 app.Show();
 
+s.Solve();
+
+v.DisplacementScale = 75;
+v.DrawDeformation(app);
+app.Show();
+
+v.ElementForceScale = 1e-3;
+v.DrawElementForces(app);
+app.Show();

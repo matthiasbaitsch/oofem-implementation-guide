@@ -19,16 +19,23 @@ Chapters (see `_quarto.yml`):
 
 ## Reference solution code
 
-`oofem-csharp/` holds the instructor's reference C# implementation, split by
-guide stage (`oofem-01` = preprocessing, `oofem-02` = + processing, a
-`oofem-visualizer-01` for the `Visualizer` class). Uses Math.NET Numerics for
-`Vector`/`Matrix`.
+`oofem-csharp/` holds the instructor's reference C# implementation: a single
+`oofem` project (the FE program) and a single `oofem-visualizer` project (the
+`Visualizer` class, references `oofem`). Each `Program.cs` is one
+progressively-growing script — earlier guide stages are shown by including
+only a line range of the same final file, not by keeping separate per-stage
+projects/snapshots around. Uses Math.NET Numerics for `Vector`/`Matrix`.
 
 Chapters pull code straight from these files via the `include-code-files`
 Quarto filter:
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=1 end-line=17}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=17}
 ```
+
+Note: `oofem-visualizer/Program.cs` calls `BoDrawApp.Show()` more than once
+(after each drawing stage: system, deformation, element forces) — confirmed
+safe to call repeatedly, so each guide section's line range ends in its own
+`app.Show()` and is independently meaningful.
 
 **When editing these `.cs` files, check the qmd files for `start-line`/
 `end-line` references and update them if line numbers shift.** Prefer

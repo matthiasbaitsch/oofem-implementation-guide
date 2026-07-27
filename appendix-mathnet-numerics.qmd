@@ -1,0 +1,96 @@
+# Math.NET Numerics {#sec-appendix-mathnet-numerics}
+
+[Math.NET Numerics](https://numerics.mathdotnet.com){target="_blank"} is the C# package used throughout this guide for vector and matrix computations. This appendix collects two short reference programs demonstrating the parts of the library needed for the FE program: basic vector operations and solving a linear system.
+
+Add the package to a project as described in @sec-design-and-implementation, or directly:
+
+```bash
+dotnet add package MathNet.Numerics
+```
+
+Using the aliases
+
+```xml
+<Using Include="MathNet.Numerics.LinearAlgebra.Matrix&lt;double&gt;" Alias="Matrix" />
+<Using Include="MathNet.Numerics.LinearAlgebra.Vector&lt;double&gt;" Alias="Vector" />
+```
+
+lets you write `Matrix` and `Vector` instead of the full generic type names.
+
+## Vectors
+
+`Vector` objects are created via the `Vector.Build` factory, support the usual arithmetic operators, and provide methods such as `Norm` and the outer product.
+
+```{.csharp include="oofem-csharp/numerics-01/Program.cs"}
+```
+
+Output:
+
+```{.raw-output}
+a = DenseVector 3-Double
+1
+2
+0
+
+b = DenseVector 3-Double
+4.1
+5.9
+6.3
+
+-a + 3 * b = DenseVector 3-Double
+11.3
+15.7
+18.9
+
+|a| = 2.23606797749979
+a ⋅ b = 15.9
+a * b^T = DenseMatrix 3x3-Double
+4.1   5.9   6.3
+8.2  11.8  12.6
+  0     0     0
+
+Concatenation of a and b = DenseVector 6-Double
+  1
+  2
+  0
+4.1
+5.9
+6.3
+```
+
+## Matrices and linear systems
+
+`Matrix` objects are created the same way as vectors. `Matrix.Solve` solves a linear system $\mathbf{A} \mathbf{x} = \mathbf{b}$ for $\mathbf{x}$, which is exactly what is needed to compute displacements from the assembled stiffness matrix and load vector.
+
+```{.csharp include="oofem-csharp/numerics-02/Program.cs"}
+```
+
+Output:
+
+```{.raw-output}
+A =
+DenseMatrix 3x3-Double
+4  1  0
+1  3  1
+0  1  2
+
+b =
+DenseVector 3-Double
+1
+2
+3
+
+x =
+DenseVector 3-Double
+0.222222
+0.111111
+ 1.44444
+
+Residual A*x - b =
+DenseVector 3-Double
+          0
+          0
+4.44089E-16
+
+Norm of residual |A*x - b| = 4.440892098500626E-16
+```

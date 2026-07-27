@@ -1,4 +1,4 @@
-# Design and implementation
+# Design and implementation {#sec-design-and-implementation}
 
 In this section, for each of the three analysis phases, a software design is presented and you are guided step by step through the implementation. Of course, there are many other paths to get to the same endgoal. Feel free to go your own way if you are familiar with programming and finite element analysis.
 
@@ -76,8 +76,7 @@ Regarding the data types in the class diagram:
 
 Implement the classes for the structure as shown in @fig-class-diagram-1. The following code fragment establishes the model in @fig-system-example and can be used for testing purposes. If your code is for 3D models, include the third coordinate 0 and fix all nodes in $\mathbf{e}_3$ direction.
 
-```{.csharp}
- {{< include oofem-csharp/oofem-01/Program.cs >}}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=15}
 ```
 
 A nicely formatted output of the `Print` method is given here.
@@ -115,8 +114,7 @@ Program the `Visualizer` class in the UML class diagram in @fig-class-diagram-1.
 
 ::: {.columns}
 ::: {.column width=45%}
-```{.csharp}
- {{< include oofem-csharp/oofem-visualizer-01/Program.cs >}}
+```{.csharp include="oofem-csharp/oofem-visualizer/Program.cs" start-line=1 end-line=22}
 ```
 :::
 ::: {.column width=5%}
@@ -170,7 +168,7 @@ Note that the transformation vector has four entries in 2D and six entries in 3D
 
 In order to test the methods, add the length to the element output and compute the stiffness matrix for element 3. Below the testing code
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=1 end-line=17}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=17}
 ```
 
 and the desired output
@@ -216,7 +214,7 @@ Implement the `EnumerateDOFs` methods in `Structure` and `Node` as well as the `
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=20 end-line=30}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=20 end-line=30}
 ```
 
 ## Implementation in Python
@@ -280,7 +278,7 @@ as reference. The final result can be verified by the following code and output.
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=33 end-line=37}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=33 end-line=37}
 ```
 
 ## Implementation in Python
@@ -320,7 +318,7 @@ Implement a `Displacement` method in `Element` that concatenates the displacemen
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=40 end-line=40}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=40 end-line=40}
 ```
 
 ## Implementation in Python
@@ -340,7 +338,7 @@ Analogous to the `Print` method from the preprocessing step, implement a `PrintR
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=42 end-line=42}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=42 end-line=42}
 ```
 
 ## Implementation in Python
@@ -379,7 +377,7 @@ To visualize the deformation, draw for each element both the undeformed shape (a
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-visualizer-02/Program.cs" start-line=19 end-line=23}
+```{.csharp include="oofem-csharp/oofem-visualizer/Program.cs" start-line=24 end-line=28}
 ```
 
 ## Implementation in Python
@@ -395,7 +393,7 @@ To visualize the element normal forces, draw for each element a colored band nex
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-visualizer-02/Program.cs" start-line=25 end-line=28}
+```{.csharp include="oofem-csharp/oofem-visualizer/Program.cs" start-line=30 end-line=32}
 ```
 
 ## Implementation in Python
