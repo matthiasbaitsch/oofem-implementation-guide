@@ -91,7 +91,7 @@ A nicely formatted output of the `Print` method is given here.
 ──────────────────────────────────────────────────────────────────
   0      0.0000      0.0000      X      X                        
   1      4.0000      0.0000             X                        
-  2      0.0000      3.0000                 120000.00            
+  2      0.0000      3.0000                   1200.00            
 ──────────────────────────────────────────────────────────────────
 
 ──────────────────────────────────────────────────────────────────
@@ -184,7 +184,7 @@ and the desired output
 ──────────────────────────────────────────────────────────────────
   0      0.0000      0.0000      X      X                        
   1      4.0000      0.0000             X                        
-  2      0.0000      3.0000                 120000.00            
+  2      0.0000      3.0000                   1200.00            
 ──────────────────────────────────────────────────────────────────
 
 ──────────────────────────────────────────────────────────────────
@@ -266,18 +266,141 @@ $$
 \quad \text{and} \quad
 \mathbf{r} =
 \left[
-  \begin{array}{r}
+  \begin{array}{c}
     0 \\
-    120000 \\
+    1200 \\
     0
   \end{array}
 \right]
 $$
 
-as reference.
+as reference. The final result can be verified by the following code and output.
 
+::: {.panel-tabset}
 
+## Implementation in C\#
+
+```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=33 end-line=37}
+```
+
+## Implementation in Python
+
+TODO
+:::
+
+```raw-output
+Node 0 has displacement [0, 0]
+Node 1 has displacement [0.0048, 0]
+Node 2 has displacement [0.0162, 0.0027]
+```
 
 ## Postprocessing
+
+With the nodal displacements available, the last step is to derive the quantity of interest for a truss analysis - the normal force in each element - and to present the results, both as formatted text output and as pictures of the deformed structure and the element normal forces. @fig-class-diagram-3 shows the additional methods needed for this step, building on the classes already implemented.
+
+![UML class diagram - postprocessing](00-pics/class-diagram-3.png){#fig-class-diagram-3}
+
+### Compute element normal force
+
+The normal force in an element follows from its elongation. Using the nodal displacement vector of the element
+
+$$
+\mathbf{u}^e = \left[\begin{array}{c}\mathbf{u}^{n1} \\ \mathbf{u}^{n2}\end{array}\right],
+$$
+
+with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the normal force is
+
+$$
+N^e = \frac{EA}{l^e} \mathbf{t}^e) \cdot \mathbf{u}^e.
+$$
+
+Implement a `Displacement` method in `Element` that concatenates the displacement vectors of the two nodes (analogous to the `DOFs` method) and a `NormalForce` method evaluating the formula above. Test your implementation by computing the normal force of element 3 right after solving:
+
+::: {.panel-tabset}
+
+## Implementation in C\#
+
+```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=40 end-line=40}
+```
+
+## Implementation in Python
+
+TODO
+:::
+
+```raw-output
+N3 = -1500
+```
+
+### Print analysis results
+
+Analogous to the `Print` method from the preprocessing step, implement a `PrintResults` method in `Structure` that outputs a table with the nodal displacements and a table with the element normal forces.
+
+::: {.panel-tabset}
+
+## Implementation in C\#
+
+```{.csharp include="oofem-csharp/oofem-02/Program.cs" start-line=42 end-line=42}
+```
+
+## Implementation in Python
+
+TODO
+:::
+
+```{.raw-output}
+──────────────────────────────────────────────────────────────────
+                     N O D E   R E S U L T S
+──────────────────────────────────────────────────────────────────
+                Ux              Uy
+──────────────────────────────────────────────────────────────────
+  0       0.000000       0.000000
+  1       0.004800       0.000000
+  2       0.016200       0.002700
+──────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────────────────────────────────
+                  E L E M E N T   R E S U L T S
+──────────────────────────────────────────────────────────────────
+    Normal force N
+──────────────────────────────────────────────────────────────────
+  0    1200.000000
+  1     900.000000
+  2   -1500.000000
+──────────────────────────────────────────────────────────────────
+```
+
+### Visualize deformation
+
+To visualize the deformation, draw for each element both the undeformed shape (a thin line between the node positions) and, scaled by a factor `DisplacementScale`, the deformed shape (a thicker, colored line between the node positions shifted by the nodal displacements). Implement a `DrawDeformation` method in `Visualizer` analogous to `DrawSystem`.
+
+::: {.panel-tabset}
+
+## Implementation in C\#
+
+```{.csharp include="oofem-csharp/oofem-visualizer-02/Program.cs" start-line=19 end-line=23}
+```
+
+## Implementation in Python
+
+TODO
+:::
+
+### Visualize element normal forces
+
+To visualize the element normal forces, draw for each element a colored band next to the element line, offset perpendicular to the element axis by an amount proportional to the normal force and scaled by a factor `ElementForceScale`. Use, for example, blue for tension (positive normal force) and red for compression (negative normal force). Implement a `DrawElementForces` method in `Visualizer` analogous to `DrawDeformation`.
+
+::: {.panel-tabset}
+
+## Implementation in C\#
+
+```{.csharp include="oofem-csharp/oofem-visualizer-02/Program.cs" start-line=25 end-line=28}
+```
+
+## Implementation in Python
+
+TODO
+:::
 
 

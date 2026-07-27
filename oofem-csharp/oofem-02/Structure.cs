@@ -12,9 +12,7 @@ public class Structure
 
     public Element AddElement(double e, double a, int n1, int n2)
     {
-        Node node1 = this.Nodes[n1];
-        Node node2 = this.Nodes[n2];
-        Element element = new Element(e, a, node1, node2);
+        Element element = new Element(e, a, this.Nodes[n1], this.Nodes[n2]);
         this.Elements.Add(element);
         return element;
     }
@@ -91,11 +89,6 @@ public class Structure
                 }
             }
         }
-
-        // Print
-        Console.WriteLine("K = " + K);
-        Console.WriteLine("r = " + r);
-        Console.WriteLine("u = " + u);
     }
 
     public void Print()
@@ -122,6 +115,35 @@ public class Structure
         for (int i = 0; i < this.Elements.Count; i++)
         {
             Console.WriteLine($"{i,3}{this.Elements[i]}");
+        }
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+    }
+
+    public void PrintResults()
+    {
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        Console.WriteLine("                     N O D E   R E S U L T S");
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        Console.WriteLine($"                Ux              Uy");
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        for (int i = 0; i < this.Nodes.Count; i++)
+        {
+            Node node = this.Nodes[i];
+            Console.WriteLine($"{i,3}{node.Displacement[0],15:0.000000}{node.Displacement[1],15:0.000000}");
+        }
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        Console.WriteLine("                  E L E M E N T   R E S U L T S");
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        Console.WriteLine($"    Normal force N");
+        Console.WriteLine("──────────────────────────────────────────────────────────────────");
+        for (int i = 0; i < this.Elements.Count; i++)
+        {
+            Element element = this.Elements[i];
+            Console.WriteLine($"{i,3}{element.NormalForce(),15:0.000000}");
         }
         Console.WriteLine("──────────────────────────────────────────────────────────────────");
     }

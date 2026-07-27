@@ -8,7 +8,7 @@ n1.Constraint.Fixed[1] = true;
 Node n2 = s.AddNode(4, 0);
 n2.Constraint.Fixed[1] = true;
 Node n3 = s.AddNode(0, 3);
-n3.Force.Components[0] = 120000;
+n3.Force.Components[0] = 1200;
 
 s.AddElement(10e9, 1e-4, 0, 1);
 s.AddElement(10e9, 1e-4, 0, 2);

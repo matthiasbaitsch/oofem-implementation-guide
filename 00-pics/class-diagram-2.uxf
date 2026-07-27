@@ -3,8 +3,9 @@
 ...
 --
 ...
++ EnumerateDOFs(): int
 + Solve(): void
-+ EnumerateDOFs(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>280</y><w>300</w><h>140</h></coordinates><panel_attributes>Node
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>280</y><w>300</w><h>140</h></coordinates><panel_attributes>Node
 --
 ...
 + DOFs: int[]
@@ -23,14 +24,13 @@
 + DOFs(): int[]
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>280</y><w>160</w><h>50</h></coordinates><panel_attributes>Constraint
 --
-+ Fixed: bool[]
+...
 --</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>370</y><w>160</w><h>50</h></coordinates><panel_attributes>Force
 --
-+ Components: Vector
+...
 --</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>150</x><y>160</y><w>230</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes><additional_attributes>210;10;210;80;10;80;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>160</y><w>220</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes><additional_attributes>10;10;10;80;200;80;200;120</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>280</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>370</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>320</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>690</x><y>60</y><w>240</w><h>110</h></coordinates><panel_attributes>Visualizer
 --
 ...
-+ DisplacementScale: double
 --
 ...
-+ DrawDeformation(app: Viewer): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>90</y><w>180</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>90</y><w>180</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element></diagram>
