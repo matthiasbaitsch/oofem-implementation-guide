@@ -51,7 +51,59 @@ Steps:
     ```
 
 ## Implementation in Python
-TODO
+
+Steps:
+
+1. Create the projects `oofem` and `oofem-visualizer`.
+1. In order to work with matrices and vectors, you can use the [NumPy](https://numpy.org){target="_blank"} package. Install it using pip:
+
+    ```bash
+    pip install numpy
+    ```
+
+1. The `oofem-visualizer` project needs pyvista. Install it using pip:
+  
+
+    ```
+    pip install pyvista
+    ```
+:::
+
+## Preprocessing
+
+For preprocessing, we need the classes identified in @sec-analysis-preprocessing along with required methods and attributes. @fig-class-diagram-1 shows a possible software design in a UML class diagram.
+
+![UML class diagram - preprocessing](00-pics/class-diagram-1.png){#fig-class-diagram-1}
+
+Notes on the class diagram in @fig-class-diagram-1:
+
+- For simplicity, all attributes are public. We use capital first letters for attributes and methods; adapt this to the programming style of your language of choice.
+- The software design is intentionally simple. It can later be extended as needed, e.g., by introducing an abstract element class with concrete subclasses for trusses and beams.
+- The `Constraint` and `Force` classes are just holders of an array. An alternative would have been to directly introduce a boolean and a double array to the node class for constraints and forces.
+
+Regarding the data types in the class diagram:
+
+- `List`: An ordered collection which can grow (array in Python, `List` in C#)
+- `Vector`: A type representing mathematical vectors (NumPy in Python, Math.NET Numerics in C#)
+- `type[]`: Standard array type
+
+### Implement structural classes
+
+Implement the classes for the structure as shown in @fig-class-diagram-1. The following code fragment establishes the model in @fig-system-example and can be used for testing purposes. If your code is for 3D models, include the third coordinate 0 and fix all nodes in $\mathbf{e}_3$ direction.
+
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=15}
+```
+      <Using Include="MathNet.Numerics.LinearAlgebra.Vector&lt;double&gt;" Alias="Vector" />
+    </ItemGroup>
+    ```
+
+    to the `oofem.csproj` file. The `PackageReference` line adds the package; the two `Using` lines below simplify its usage.
+
+1. The `oofem-visualizer` project needs BoDraw
+
+    ```
+    dotnet add oofem-visualizer/oofem-visualizer.csproj package BoDraw.App
+    ```
 :::
 
 ## Preprocessing
