@@ -29,14 +29,7 @@ for (int i = 0; i < s.Elements.Count; i++)
     Console.WriteLine($"Element {i} has DOFs [{string.Join(", ", s.Elements[i].DOFs())}]");
 }
 
-// Solve
 s.Solve();
-for (int i = 0; i < s.Nodes.Count; i++)
-{
-    Console.WriteLine($"Node {i} has displacement [{string.Join(", ", s.Nodes[i].Displacement)}]");
-}
-
-// Normal force
+Console.WriteLine($"Node 2 has displacement [{string.Join(", ", s.Nodes[2].Displacement)}]");
 Console.WriteLine($"\nN3 = {e3.NormalForce()}");
-
 s.PrintResults();

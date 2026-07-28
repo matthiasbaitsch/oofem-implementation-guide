@@ -279,7 +279,7 @@ as a reference. The final result can be verified by the following code and outpu
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=33 end-line=37}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=32 end-line=33}
 ```
 
 ## Implementation in Python
@@ -289,8 +289,6 @@ as a reference. The final result can be verified by the following code and outpu
 :::
 
 ```raw-output
-Node 0 has displacement [0, 0]
-Node 1 has displacement [0.0048, 0]
 Node 2 has displacement [0.0162, 0.0027]
 ```
 
@@ -312,7 +310,7 @@ $$
 \mathbf{u}^e = \left[\begin{array}{c}\mathbf{u}^{n1} \\ \mathbf{u}^{n2}\end{array}\right],
 $$
 
-with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the elongation is $(\mathbf{t}^e)^T \mathbf{u}^e$ and the normal force is
+with the same layout as the transformation vector $\mathbf{t}^e$ introduced earlier, the elongation is $\mathbf{t}^e \cdot \mathbf{u}^e$ and the normal force is
 
 $$
 N^e = \frac{EA}{l^e} \; \mathbf{t}^e \cdot \mathbf{u}^e.
@@ -324,7 +322,7 @@ Implement a `Displacement` method in `Element` that concatenates the displacemen
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=40 end-line=40}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=34 end-line=34}
 ```
 
 ## Implementation in Python
@@ -345,7 +343,7 @@ Analogous to the `Print` method from the preprocessing step, implement a `PrintR
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=42 end-line=42}
+```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=35 end-line=35}
 ```
 
 ## Implementation in Python
@@ -364,7 +362,6 @@ Analogous to the `Print` method from the preprocessing step, implement a `PrintR
   1       0.004800       0.000000
   2       0.016200       0.002700
 ──────────────────────────────────────────────────────────────────
-
 
 ──────────────────────────────────────────────────────────────────
                   E L E M E N T   R E S U L T S
@@ -385,7 +382,7 @@ To visualize the deformation, draw for each element both the undeformed shape (a
 
 ## Implementation in C\#
 
-```{.csharp include="oofem-csharp/oofem-visualizer/Program.cs" start-line=24 end-line=28}
+```{.csharp include="oofem-csharp/oofem-visualizer/Program.cs" start-line=26 end-line=28}
 ```
 
 ## Implementation in Python
