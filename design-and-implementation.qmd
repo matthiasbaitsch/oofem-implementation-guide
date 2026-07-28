@@ -219,7 +219,8 @@ Implement the `EnumerateDOFs` methods in `Structure` and `Node` as well as the `
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem/main.py" start-line=48 end-line=57}
+```
 :::
 
 and the correct output for our example
@@ -283,7 +284,8 @@ as a reference. The final result can be verified by the following code and outpu
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem/main.py" start-line=59 end-line=66}
+```
 :::
 
 ```raw-output
@@ -327,7 +329,8 @@ Implement a `Displacement` method in `Element` that concatenates the displacemen
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem/main.py" start-line=68 end-line=69}
+```
 :::
 
 ```raw-output
@@ -347,7 +350,8 @@ Analogous to the `Print` method from the preprocessing step, implement a `PrintR
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem/main.py" start-line=71 end-line=71}
+```
 :::
 
 ```{.raw-output}
@@ -386,7 +390,8 @@ To visualize the deformation, draw for each element both the undeformed shape (a
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem-visualizer/main.py" start-line=145 end-line=148}
+```
 :::
 
 ### Visualize element normal forces
@@ -402,7 +407,8 @@ To visualize the element normal forces, draw for each element a colored band nex
 
 ## Implementation in Python
 
-TODO
+```{.python include="oofem-python/oofem-visualizer/main.py" start-line=155 end-line=157}
+```
 :::
 
 
