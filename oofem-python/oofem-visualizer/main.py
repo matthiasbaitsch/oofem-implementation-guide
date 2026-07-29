@@ -129,14 +129,13 @@ visualizer.force_radius = 0.018
 
 visualizer.undeformed_radius = 0.018
 visualizer.deformed_radius = 0.03
-
+visualizer.force_scale = 0.0006
 
 # ------------------------------------------------------------
 # Show model, supports, and applied load
 # ------------------------------------------------------------
 
 visualizer.draw_model()
-
 
 # ------------------------------------------------------------
 # Solve the structure
@@ -147,17 +146,13 @@ structure.solve()
 visualizer.displacement_scale = 10.0
 visualizer.draw_deformed_structure()
 
-
 # ------------------------------------------------------------
 # Show element normal forces
 # ------------------------------------------------------------
 
-visualizer.force_scale = 0.0006
 visualizer.draw_element_forces()
-
 
 # ------------------------------------------------------------
 # Print analysis results
 # ------------------------------------------------------------
-
 structure.print_results()

@@ -91,8 +91,19 @@ Regarding the data types in the class diagram:
 
 Implement the classes for the structure as shown in @fig-class-diagram-1. The following code fragment establishes the model in @fig-system-example and can be used for testing purposes. If your code is for 3D models, include the third coordinate 0 and fix all nodes in $\mathbf{e}_3$ direction.
 
+::: {.panel-tabset}
+
+## Implementation in C\#
+
 ```{.csharp include="oofem-csharp/oofem/Program.cs" start-line=1 end-line=15}
 ```
+
+## Implementation in python
+
+```{.python include="oofem-python/oofem/main.py" start-line=4 end-line=28}
+```
+
+:::
 
 A nicely formatted output of the `Print` method is given here.
 
@@ -234,7 +245,7 @@ Implement the `EnumerateDOFs` methods in `Structure` and `Node` as well as the `
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem/main.py" start-line=48 end-line=57}
+```{.python include="oofem-python/oofem/main.py" start-line=33 end-line=42}
 ```
 :::
 
@@ -299,7 +310,7 @@ as a reference. The final result can be verified by the following code and outpu
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem/main.py" start-line=59 end-line=66}
+```{.python include="oofem-python/oofem/main.py" start-line=45 end-line=51}
 ```
 :::
 
@@ -342,7 +353,7 @@ Implement a `Displacement` method in `Element` that concatenates the displacemen
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem/main.py" start-line=68 end-line=69}
+```{.python include="oofem-python/oofem/main.py" start-line=53 end-line=54}
 ```
 :::
 
@@ -363,7 +374,7 @@ Analogous to the `Print` method from the preprocessing step, implement a `PrintR
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem/main.py" start-line=71 end-line=71}
+```{.python include="oofem-python/oofem/main.py" start-line=56 end-line=56}
 ```
 :::
 
@@ -402,7 +413,7 @@ To visualize the deformation, draw for each element both the undeformed shape (a
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem-visualizer/main.py" start-line=145 end-line=148}
+```{.python include="oofem-python/oofem-visualizer/main.py" start-line=146 end-line=147}
 ```
 :::
 
@@ -419,7 +430,7 @@ To visualize the element normal forces, draw for each element a colored band nex
 
 ## Implementation in Python
 
-```{.python include="oofem-python/oofem-visualizer/main.py" start-line=155 end-line=157}
+```{.python include="oofem-python/oofem-visualizer/main.py" start-line=153 end-line=153}
 ```
 :::
 

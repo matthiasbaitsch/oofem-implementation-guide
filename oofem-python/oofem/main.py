@@ -18,26 +18,11 @@ node3.constraint.fixed[2] = True
 node3.force.components[0] = 1200.0
 
 # Elements
-element1 = structure.add_element(
-    10e9,
-    1e-4,
-    0,
-    1,
-)
+element1 = structure.add_element(10e9, 1e-4, 0, 1)
 
-element2 = structure.add_element(
-    10e9,
-    1e-4,
-    0,
-    2,
-)
+element2 = structure.add_element(10e9, 1e-4, 0, 2)
 
-element3 = structure.add_element(
-    10e9,
-    1e-4,
-    2,
-    1,
-)
+element3 = structure.add_element(10e9, 1e-4, 2, 1)
 
 # Print model data
 structure.print()
