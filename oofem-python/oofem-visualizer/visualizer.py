@@ -120,6 +120,8 @@ class Visualizer:
 
     def draw_model(self):
 
+        self.update_parameters()
+
         plotter = pv.Plotter()
 
         self.draw_elements(plotter)
@@ -186,6 +188,8 @@ class Visualizer:
             )
 
     def draw_deformed_structure(self):
+
+        self.update_parameters()
 
         plotter = pv.Plotter()
 
@@ -279,6 +283,8 @@ class Visualizer:
 
     def draw_element_forces(self):
 
+        self.update_parameters()
+
         plotter = pv.Plotter()
 
         self._draw_undeformed_structure(plotter)
@@ -306,3 +312,43 @@ class Visualizer:
         plotter.view_xy()
 
         plotter.show()
+
+    def update_parameters(self):
+
+        size = self.system_size()
+
+        forces = np.array(
+            [node.force.components for node in self.structure.nodes]
+        )
+        max_force = np.max(np.linalg.norm(forces, axis=1))
+
+        displacements = np.array(
+            [node.displacement for node in self.structure.nodes]
+        )
+        max_displacement = np.max(np.linalg.norm(displacements, axis=1))
+
+        self.element_radius = 0.006 * size
+        self.node_radius = 0.012 * size
+
+        self.constraint_scale = 0.045 * size
+        self.force_radius = 0.0045 * size
+        self.force_scale = 0.2 * size / max_force
+
+        self.undeformed_radius = 0.003 * size
+        self.deformed_radius = 0.0075 * size
+        self.displacement_scale = 0.1 * size / max_displacement
+
+    def system_size(self) -> float:
+
+        positions = np.array(
+            [node.position for node in self.structure.nodes]
+        )
+
+        ranges = positions.max(axis=0) - positions.min(axis=0)
+        ranges = ranges[ranges > 1e-9]
+
+        if len(ranges) == 0:
+            return 1.0
+
+        return np.prod(ranges) ** (1.0 / len(ranges))
+    

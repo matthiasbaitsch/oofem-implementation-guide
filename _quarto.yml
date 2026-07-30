@@ -12,9 +12,10 @@ book:
     - introduction.qmd
     - analysis.qmd
     - design-and-implementation.qmd
-    - references.qmd
+    - extensions.qmd
   appendices:
     - appendix-mathnet-numerics.qmd
+    - references.qmd
   downloads: pdf
 
 bibliography: references.bib

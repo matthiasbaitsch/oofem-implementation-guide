@@ -64,3 +64,10 @@ solutions unless explicitly asked; this is being built incrementally.
   (`introduction.qmd`) — full solutions belong only in `oofem-csharp/` (and
   a future `oofem-python/`) as instructor reference material, not as
   something generated on request for a student working through the guide.
+- **"How does X work?" is a question, not a change request.** When the
+  user asks how to do something (e.g. "how can I define a function in its
+  own file"), answer in words/code snippet — do not go edit their files
+  unless they separately ask for the change to be made.
+- **Memory/feedback about how to work in this repo goes here in
+  CLAUDE.md** (it's checked into the repo), not in the global
+  `~/.claude/.../memory/` store.

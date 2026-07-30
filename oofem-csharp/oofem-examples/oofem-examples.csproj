@@ -12,11 +12,8 @@
     <ProjectReference Include="../oofem-visualizer/oofem-visualizer.csproj" />
   </ItemGroup>
 
-  <ItemGroup></ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="ExcelDataReader.DataSet" Version="3.9.0" />
+    <None Include="structures/**" Exclude="structures/~$*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
 
 </Project>

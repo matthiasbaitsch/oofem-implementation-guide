@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    <PackageReference Include="NPOI" Version="2.*" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="5.0.0" />
     <Using Include="MathNet.Numerics.LinearAlgebra.Matrix&lt;double&gt;" Alias="Matrix" />
     <Using Include="MathNet.Numerics.LinearAlgebra.Vector&lt;double&gt;" Alias="Vector" />
   </ItemGroup>

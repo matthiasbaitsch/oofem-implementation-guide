@@ -1,4 +1,5 @@
 using BoDraw;
+using static System.Math;
 
 public class Visualizer
 {
@@ -16,6 +17,8 @@ public class Visualizer
 
     public void DrawSystem(IBoDraw bd)
     {
+        this.UpdateParameters();
+
         // Elements
         foreach (Element element in this.Structure.Elements)
         {
@@ -61,6 +64,7 @@ public class Visualizer
 
     public void DrawDeformation(BoDrawApp bd)
     {
+        this.UpdateParameters();
         foreach (Element element in this.Structure.Elements)
         {
             Vector p1 = element.Node1.Position;
@@ -75,6 +79,7 @@ public class Visualizer
 
     public void DrawElementForces(BoDrawApp bd)
     {
+        this.UpdateParameters();
         foreach (Element element in this.Structure.Elements)
         {
             double N = element.NormalForce();
@@ -92,5 +97,42 @@ public class Visualizer
             bd.Add(p);
             bd.Add(new Line(p1[0], p1[1], p2[0], p2[1]).WithThickness(3));
         }
+    }
+
+    public void UpdateParameters()
+    {
+        double s = this.SystemSize();
+        double maxF = this.Structure.Nodes.Max(n => n.Force.Components.Norm(2));
+        double maxU = this.Structure.Nodes.Max(n => n.Displacement.Norm(2));
+        double minN = this.Structure.Elements.Min(e => e.NormalForce());
+        double maxN = this.Structure.Elements.Max(e => e.NormalForce());
+
+        this.ConstraintSize = 0.03 * s;
+        this.ForceScale = 0.2 / maxF * s;
+        this.DisplacementScale = 0.1 * s / maxU;
+        this.ElementForceScale = 0.3 * s / (maxN - minN);
+    }
+
+    public double SystemSize()
+    {
+        double[,] ranges = new double[,] {
+             { double.MaxValue, double.MinValue },
+             { double.MaxValue, double.MinValue }
+        };
+
+        foreach (Node node in this.Structure.Nodes)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                double p = node.Position[i];
+                ranges[i, 0] = Min(ranges[i, 0], p);
+                ranges[i, 1] = Max(ranges[i, 1], p);
+            }
+        }
+
+        double d1 = ranges[0, 1] - ranges[0, 0];
+        double d2 = ranges[1, 1] - ranges[1, 0];
+
+        return Sqrt(d1 * d2);
     }
 }
