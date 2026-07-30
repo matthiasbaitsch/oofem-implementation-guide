@@ -2,5 +2,6 @@
   <Project Path="oofem/oofem.csproj" />
   <Project Path="numerics-01/numerics-01.csproj" />
   <Project Path="numerics-02/numerics-02.csproj" />
+  <Project Path="oofem-examples/oofem-examples.csproj" />
   <Project Path="oofem-visualizer/oofem-visualizer.csproj" />
 </Solution>
